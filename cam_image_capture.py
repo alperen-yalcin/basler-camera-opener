@@ -30,3 +30,11 @@ def capture_image(camera):
         grab_result.Release()
         return img_array
 
+def show_image_and_cleanup(img_array, camera):
+    cv2.imshow('Basler Camera View', img_array)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    camera.Close()
+    print("Camera closed and window destroyed.")
+
+
