@@ -37,4 +37,13 @@ def show_image_and_cleanup(img_array, camera):
     camera.Close()
     print("Camera closed and window destroyed.")
 
+def main():
+    camera = get_camera_by_serial(target_serial)
+    if camera:
+        img_array = capture_image(camera)
+        if img_array is not None:
+            show_image_and_cleanup(img_array, camera)
+
+if __name__ == "__main__":
+    main()
 
