@@ -13,3 +13,20 @@ def get_camera_by_serial(serial_number):
             return camera
     print('No camera with specified serial number found.')
     return None
+
+def capture_image(camera):
+    camera.StartGrabbingMax(1)
+
+    converter = pylon.ImageFormatConverter()
+    converter.OutputPixelFormat = pylon.PixelType_Mono8
+    converter.OutputBitAlignment = pylon.OutputBitAlignment_MsbAligned
+
+    while camera.IsGrabbing():
+        grab_result = camera.RetrieveResult(5000, pylon.TimeoutHandling_ThrowException)
+        if grab_result.GrabSucceeded():
+            image = converter.Convert(grab_result)
+            img_array = image.GetArray()
+            print('Image taken.')
+        grab_result.Release()
+        return img_array
+
